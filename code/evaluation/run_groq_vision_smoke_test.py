@@ -21,8 +21,8 @@ def run_smoke_test():
         base_url="https://api.groq.com/openai/v1"
     )
     
-    # We will use llama-3.2-11b-vision-preview
-    model_name = "llama-3.2-11b-vision-preview"
+    # We will use meta-llama/llama-4-scout-17b-16e-instruct
+    model_name = "meta-llama/llama-4-scout-17b-16e-instruct"
     
     cases = [
         {
