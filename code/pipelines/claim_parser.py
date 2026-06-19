@@ -131,7 +131,55 @@ class ClaimParser:
         if "side" in part:
             if claim_object == "package":
                 return "package_side"
+        if "seal" in part or "tape" in part:
+            return "seal"
+        if "label" in part or "sticker" in part:
+            return "label"
+        if "contents" in part or "inside" in part or "product" in part:
+            return "contents"
         return part
+
+    def _map_issue_synonyms(self, issue):
+        issue_lower = issue.lower().strip()
+        if issue_lower in ["scratch", "scrape", "scratched", "scraped", "mark"]:
+            return "scratch"
+        if issue_lower in ["dent", "bump", "crease", "dented", "creased"]:
+            return "dent"
+        if issue_lower in ["crack", "cracked", "shattered", "shatter", "glass_shatter"]:
+            return "crack"
+        if issue_lower in ["broken", "broken_part", "damaged", "broke"]:
+            return "broken_part"
+        if issue_lower in ["missing", "lost", "missing_part"]:
+            return "missing_part"
+        if issue_lower in ["torn", "torn_packaging", "open", "opened"]:
+            return "torn_packaging"
+        if issue_lower in ["crushed", "crushed_packaging"]:
+            return "crushed_packaging"
+        if issue_lower in ["water", "wet", "water_damage", "spill"]:
+            return "water_damage"
+        if issue_lower in ["stain", "dirty", "stained", "oil"]:
+            return "stain"
+            
+        if "torn" in issue_lower:
+            return "torn_packaging"
+        if "crushed" in issue_lower:
+            return "crushed_packaging"
+        if "water" in issue_lower or "wet" in issue_lower or "spill" in issue_lower:
+            return "water_damage"
+        if "stain" in issue_lower or "dirty" in issue_lower or "oil" in issue_lower:
+            return "stain"
+        if "crack" in issue_lower or "shatter" in issue_lower:
+            return "crack"
+        if "dent" in issue_lower or "bump" in issue_lower:
+            return "dent"
+        if "scratch" in issue_lower or "scrape" in issue_lower:
+            return "scratch"
+        if "missing" in issue_lower:
+            return "missing_part"
+        if "broken" in issue_lower or "damage" in issue_lower:
+            return "broken_part"
+            
+        return issue_lower
 
     def _rule_based_parser(self, text, claim_object):
         text = text.lower()
