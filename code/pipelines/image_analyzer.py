@@ -11,16 +11,47 @@ class ImageAnalyzer:
     def __init__(self, vlm_client=None):
         logger.info("Initializing Image Analyzer...")
         self.vlm_client = vlm_client or GroqVisionClient()
+        
+        # Initialize Cache
+        self.cache_dir = os.path.join(config.ROOT_DIR, "..", "cache")
+        self.cache_file = os.path.join(self.cache_dir, "image_cache.json")
+        os.makedirs(self.cache_dir, exist_ok=True)
+        self.cache = {}
+        self._load_cache()
+
+    def _load_cache(self):
+        if os.path.exists(self.cache_file):
+            try:
+                with open(self.cache_file, "r", encoding="utf-8") as f:
+                    self.cache = json.load(f)
+                logger.info(f"Loaded {len(self.cache)} entries from ImageAnalyzer cache.")
+            except Exception as e:
+                logger.error(f"Error loading ImageAnalyzer cache: {e}")
+
+    def _save_cache(self):
+        try:
+            with open(self.cache_file, "w", encoding="utf-8") as f:
+                json.dump(self.cache, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            logger.error(f"Error saving ImageAnalyzer cache: {e}")
 
     def analyze_images(self, image_paths, claim_object, parsed_claim_data):
-        """
-        Submits images to VLM to analyze object, part, damage presence, quality defects,
-        and mismatch/injection risks.
-        """
+        import hashlib
+        
         if not image_paths:
             logger.warning("No image paths provided to analyze_images.")
             return self._get_default_schema(detected_object=claim_object)
             
+        # Calculate cache key: hash of sorted absolute image paths joined by semicolon + claim_object
+        paths_key = ";".join(sorted(image_paths)) + claim_object
+        image_hash = hashlib.sha256(paths_key.encode("utf-8")).hexdigest()
+        
+        # Check Cache
+        if image_hash in self.cache:
+            logger.info("CACHE HIT: ImageAnalyzer output loaded from cache.")
+            return self.cache[image_hash]
+            
+        logger.info("CACHE MISS: Analyzing images via VLM.")
         logger.info(f"Analyzing {len(image_paths)} images for claim_object: {claim_object}")
         
         # 1. Base64 Encode Images
@@ -83,6 +114,10 @@ class ImageAnalyzer:
             
             # 4. Normalize Schema
             normalized = self._normalize_vlm_output(parsed_data, claim_object, claimed_part, claimed_issue, image_ids)
+            
+            # Save to Cache
+            self.cache[image_hash] = normalized
+            self._save_cache()
             return normalized
         except Exception as e:
             logger.error(f"Error during VLM image analysis: {e}")

@@ -22,9 +22,44 @@ class ClaimParser:
         self.model_name = os.environ.get("LLM_MODEL_NAME", "gpt-4o-mini")
         logger.info(f"ClaimParser initialized. API Client available: {self.client is not None}")
 
+        # Initialize Cache
+        self.cache_dir = os.path.join(config.ROOT_DIR, "..", "cache")
+        self.cache_file = os.path.join(self.cache_dir, "parser_cache.json")
+        os.makedirs(self.cache_dir, exist_ok=True)
+        self.cache = {}
+        self._load_cache()
+
+    def _load_cache(self):
+        if os.path.exists(self.cache_file):
+            try:
+                with open(self.cache_file, "r", encoding="utf-8") as f:
+                    self.cache = json.load(f)
+                logger.info(f"Loaded {len(self.cache)} entries from ClaimParser cache.")
+            except Exception as e:
+                logger.error(f"Error loading ClaimParser cache: {e}")
+
+    def _save_cache(self):
+        try:
+            with open(self.cache_file, "w", encoding="utf-8") as f:
+                json.dump(self.cache, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            logger.error(f"Error saving ClaimParser cache: {e}")
+
     def parse_claim(self, user_claim, claim_object):
+        import hashlib
+        
+        # Calculate key
+        claim_hash = hashlib.sha256(user_claim.encode("utf-8")).hexdigest()
+        
+        # Check Cache
+        if claim_hash in self.cache:
+            logger.info("CACHE HIT: ClaimParser output loaded from cache.")
+            return self.cache[claim_hash]
+            
+        logger.info("CACHE MISS: Parsing claim via LLM/rules.")
         logger.info(f"Parsing claim for object '{claim_object}'...")
         
+        normalized = None
         # 1. Attempt LLM-based extraction if API key is present
         if self.client:
             try:
@@ -32,14 +67,18 @@ class ClaimParser:
                 if extracted:
                     normalized = self._normalize_extracted_fields(extracted, claim_object)
                     logger.info(f"LLM parsing succeeded: {normalized}")
-                    return normalized
             except Exception as e:
                 logger.error(f"LLM parsing failed, falling back to rule-based: {e}")
                 
-        # 2. Fallback to rule-based extraction
-        fallback = self._rule_based_parser(user_claim, claim_object)
-        logger.info(f"Rule-based fallback result: {fallback}")
-        return fallback
+        if not normalized:
+            # 2. Fallback to rule-based extraction
+            normalized = self._rule_based_parser(user_claim, claim_object)
+            logger.info(f"Rule-based fallback result: {normalized}")
+
+        # Save to Cache
+        self.cache[claim_hash] = normalized
+        self._save_cache()
+        return normalized
 
     def _call_llm_parser(self, user_claim, claim_object):
         import time
