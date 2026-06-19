@@ -58,21 +58,49 @@ class GroqVisionClient(BaseAPIClient):
             "content": user_content
         })
         
-        try:
-            logger.info(f"Submitting request to Groq VLM ({len(base64_images) if base64_images else 0} images)")
-            extra_params = {}
-            if json_mode:
-                extra_params["response_format"] = {"type": "json_object"}
+        import time
+        import re
+
+        max_retries = 5
+        base_delay = 5
+
+        for attempt in range(max_retries):
+            try:
+                logger.info(f"Submitting request to Groq VLM ({len(base64_images) if base64_images else 0} images) - Attempt {attempt+1}/{max_retries}")
+                extra_params = {}
+                if json_mode:
+                    extra_params["response_format"] = {"type": "json_object"}
+                    
+                response = self.client.chat.completions.create(
+                    model=self.model_name,
+                    messages=messages,
+                    max_tokens=max_tokens,
+                    temperature=0.0,
+                    **extra_params
+                )
+                logger.info("Successfully received VLM response from Groq.")
+                return response.choices[0].message.content
+            except Exception as e:
+                err_msg = str(e)
+                logger.warning(f"Attempt {attempt+1} failed with error: {err_msg}")
                 
-            response = self.client.chat.completions.create(
-                model=self.model_name,
-                messages=messages,
-                max_tokens=max_tokens,
-                temperature=0.0,
-                **extra_params
-            )
-            logger.info("Successfully received VLM response from Groq.")
-            return response.choices[0].message.content
-        except Exception as e:
-            logger.error(f"Error calling Groq VLM API: {e}")
-            raise e
+                # Check for rate limits (429)
+                is_rate_limit = "429" in err_msg or "rate_limit" in err_msg.lower() or "rate limit" in err_msg.lower()
+                
+                if is_rate_limit and attempt < max_retries - 1:
+                    # Try to parse wait time from message, e.g. "try again in 7.072s" or "try again in 8m33.734s"
+                    wait_time = base_delay * (2 ** attempt)
+                    match_s = re.search(r"try again in (\d+\.?\d*)s", err_msg)
+                    match_m = re.search(r"try again in (\d+)m(\d+\.?\d*)s", err_msg)
+                    if match_m:
+                        minutes = int(match_m.group(1))
+                        seconds = float(match_m.group(2))
+                        wait_time = minutes * 60 + seconds + 2
+                    elif match_s:
+                        wait_time = float(match_s.group(1)) + 2
+                    
+                    logger.warning(f"Rate limit reached. Sleeping for {wait_time:.2f}s before retrying...")
+                    time.sleep(wait_time)
+                else:
+                    logger.error(f"Error calling Groq VLM API: {e}")
+                    raise e

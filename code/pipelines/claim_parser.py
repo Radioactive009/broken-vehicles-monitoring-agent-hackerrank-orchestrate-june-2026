@@ -42,6 +42,9 @@ class ClaimParser:
         return fallback
 
     def _call_llm_parser(self, user_claim, claim_object):
+        import time
+        import re
+
         # Load prompt template from prompts directory
         prompt_path = os.path.join(config.ROOT_DIR, "prompts", "claim_prompt.txt")
         if os.path.exists(prompt_path):
@@ -52,19 +55,44 @@ class ClaimParser:
 
         prompt = prompt_template.format(transcript=user_claim, claim_object=claim_object)
         
-        response = self.client.chat.completions.create(
-            model=self.model_name,
-            messages=[
-                {"role": "system", "content": "You are a precise claims processing assistant. You always respond in raw JSON format matching the schema requested."},
-                {"role": "user", "content": prompt}
-            ],
-            response_format={"type": "json_object"},
-            temperature=0.0
-        )
-        
-        content = response.choices[0].message.content
-        logger.debug(f"Raw LLM response: {content}")
-        return json.loads(content)
+        max_retries = 5
+        base_delay = 5
+
+        for attempt in range(max_retries):
+            try:
+                response = self.client.chat.completions.create(
+                    model=self.model_name,
+                    messages=[
+                        {"role": "system", "content": "You are a precise claims processing assistant. You always respond in raw JSON format matching the schema requested."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    response_format={"type": "json_object"},
+                    temperature=0.0
+                )
+                content = response.choices[0].message.content
+                logger.debug(f"Raw LLM response: {content}")
+                return json.loads(content)
+            except Exception as e:
+                err_msg = str(e)
+                logger.warning(f"ClaimParser LLM attempt {attempt+1} failed with error: {err_msg}")
+                is_rate_limit = "429" in err_msg or "rate_limit" in err_msg.lower() or "rate limit" in err_msg.lower()
+                
+                if is_rate_limit and attempt < max_retries - 1:
+                    wait_time = base_delay * (2 ** attempt)
+                    match_s = re.search(r"try again in (\d+\.?\d*)s", err_msg)
+                    match_m = re.search(r"try again in (\d+)m(\d+\.?\d*)s", err_msg)
+                    if match_m:
+                        minutes = int(match_m.group(1))
+                        seconds = float(match_m.group(2))
+                        wait_time = minutes * 60 + seconds + 2
+                    elif match_s:
+                        wait_time = float(match_s.group(1)) + 2
+                    
+                    logger.warning(f"Rate limit reached in ClaimParser. Sleeping for {wait_time:.2f}s before retrying...")
+                    time.sleep(wait_time)
+                else:
+                    logger.error(f"Error calling LLM Parser API: {e}")
+                    raise e
 
     def _normalize_extracted_fields(self, extracted_dict, claim_object):
         # Normalizes VLM/LLM output fields to the exact taxonomies in config.py
