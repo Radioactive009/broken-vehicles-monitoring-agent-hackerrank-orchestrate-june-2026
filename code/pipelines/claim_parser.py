@@ -139,24 +139,7 @@ class ClaimParser:
             return "contents"
         return part
 
-    def _map_issue_synonyms(self, issue):
-        issue = issue.replace("damaged", "broken_part").replace("broken", "broken_part")
-        issue = issue.replace("crushed", "crushed_packaging").replace("torn", "torn_packaging")
-        issue = issue.replace("wet", "water_damage").replace("spill", "water_damage")
-        
-        if "scratch" in issue or "scrape" in issue:
-            return "scratch"
-        if "dent" in issue or "bump" in issue or "crease" in issue:
-            return "dent"
-        if "crack" in issue or "shatter" in issue:
-            if "glass" in issue or "windshield" in issue:
-                return "glass_shatter"
-            return "crack"
-        if "missing" in issue or "lost" in issue:
-            return "missing_part"
-        if "stain" in issue or "dirty" in issue:
-            return "stain"
-        return issue
+
 
     def _rule_based_parser(self, user_claim, claim_object):
         text = user_claim.lower()
