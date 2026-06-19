@@ -50,9 +50,9 @@ We added a taxonomy compatibility layer in the Decision Engine to prevent close 
 
 ### Case 4 (CAR)
 - **Expected Status:** `contradicted`
-- **Predicted Status:** `not_enough_information`
-- **Correctness:** ❌ FAIL
-- **Visible Issue / Part:** `dent` / `unknown`
+- **Predicted Status:** `contradicted`
+- **Correctness:** ✅ PASS
+- **Visible Issue / Part:** `unknown` / `unknown`
 - **Claimed Issue / Part:** `broken_part` / `rear_bumper`
 
 ### Case 5 (CAR)
@@ -85,8 +85,8 @@ We added a taxonomy compatibility layer in the Decision Engine to prevent close 
 
 ### Case 9 (LAPTOP)
 - **Expected Status:** `supported`
-- **Predicted Status:** `supported`
-- **Correctness:** ✅ PASS
-- **Visible Issue / Part:** `broken_part` / `screen`
+- **Predicted Status:** `contradicted`
+- **Correctness:** ❌ FAIL
+- **Visible Issue / Part:** `unknown` / `unknown`
 - **Claimed Issue / Part:** `broken_part` / `screen`
 
