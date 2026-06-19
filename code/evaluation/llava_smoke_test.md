@@ -23,7 +23,9 @@ Error querying local Ollama (Llava:7b): HTTPConnectionPool(host='localhost', por
 - **Expected Issue**: crack
 - **LLaVA Response**:
 ```json
-Error querying local Ollama (Llava:7b): HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=30)
+{":-?!!E2A.":"&2'7+6?A'+##(:.=","1C$D$CA":[false]                                                     	           	
+
+}
 ```
 
 ### Row 10 (Object: laptop)
