@@ -19,7 +19,7 @@ class ImageAnalyzer:
         """
         if not image_paths:
             logger.warning("No image paths provided to analyze_images.")
-            return self._get_default_schema()
+            return self._get_default_schema(detected_object=claim_object)
             
         logger.info(f"Analyzing {len(image_paths)} images for claim_object: {claim_object}")
         
@@ -34,7 +34,7 @@ class ImageAnalyzer:
                 
         if not base64_images:
             logger.error("Failed to encode any images to base64.")
-            return self._get_default_schema()
+            return self._get_default_schema(detected_object=claim_object)
             
         # 2. Construct Prompt
         claimed_part = parsed_claim_data.get("claimed_object_part", "unknown")
@@ -86,7 +86,7 @@ class ImageAnalyzer:
             return normalized
         except Exception as e:
             logger.error(f"Error during VLM image analysis: {e}")
-            return self._get_default_schema()
+            return self._get_default_schema(detected_object=claim_object)
 
     def _normalize_vlm_output(self, data, claim_object, claimed_part, claimed_issue, available_image_ids):
         # 1. Normalize detected object
@@ -292,9 +292,9 @@ class ImageAnalyzer:
             "supporting_image_ids": supporting_image_ids
         }
 
-    def _get_default_schema(self):
+    def _get_default_schema(self, detected_object="unknown"):
         return {
-            "detected_object": "unknown",
+            "detected_object": detected_object,
             "visible_issue_type": "unknown",
             "visible_object_part": "unknown",
             "damage_visible": False,

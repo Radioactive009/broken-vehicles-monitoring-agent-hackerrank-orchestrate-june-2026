@@ -129,7 +129,7 @@ class DecisionEngine:
                 justification = f"Claim contradicts image evidence. The VLM detected {visible_issue} on the {visible_part}, which contradicts the claimed {claimed_issue}."
                 
             # check support condition (exact match or compatible issues, and compatible parts)
-            elif detected_object == claim_object and parts_match and damage_visible and issue_match in ["exact_match", "compatible"]:
+            elif parts_match and damage_visible and issue_match in ["exact_match", "compatible"]:
                 claim_status = "supported"
                 justification = f"Claim supported by image evidence. A visible {visible_issue} is present on the {claimed_part}."
                 
