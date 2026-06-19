@@ -75,6 +75,9 @@ class ClaimParser:
         claimed_part = self._map_part_synonyms(claimed_part, claim_object)
         claimed_issue = self._map_issue_synonyms(claimed_issue)
         
+        # Apply object aware constraint mappings
+        claimed_part, claimed_issue = self._apply_object_aware_constraints(claimed_part, claimed_issue, claim_object)
+        
         # Strict validation check
         allowed_parts = self._get_allowed_parts(claim_object)
         if claimed_part not in allowed_parts:
@@ -181,6 +184,41 @@ class ClaimParser:
             
         return issue_lower
 
+    def _apply_object_aware_constraints(self, part, issue, claim_object):
+        # Enforce strict part domains
+        if claim_object == "car":
+            if part in ["screen", "keyboard", "trackpad", "lid", "corner", "base", "port"]:
+                part = "unknown"
+            elif part in ["box", "package_corner", "package_side", "seal", "label", "contents", "item"]:
+                part = "unknown"
+        elif claim_object == "laptop":
+            if part in ["front_bumper", "rear_bumper", "hood", "windshield", "side_mirror", "headlight", "taillight", "fender", "quarter_panel"]:
+                part = "body"
+            elif part in ["box", "package_corner", "package_side", "seal", "label", "contents", "item"]:
+                part = "body"
+        elif claim_object == "package":
+            if part in ["front_bumper", "rear_bumper", "door", "hood", "windshield", "side_mirror", "headlight", "taillight", "fender", "quarter_panel"]:
+                part = "box"
+            elif part in ["screen", "keyboard", "trackpad", "hinge", "lid", "corner", "port", "base"]:
+                part = "contents"
+                
+        # Enforce strict issue domains
+        if claim_object == "car":
+            if issue in ["torn_packaging", "crushed_packaging"]:
+                issue = "dent"
+            elif issue in ["water_damage", "stain"]:
+                issue = "scratch"  # Map to closest possible visual issue
+        elif claim_object == "laptop":
+            if issue in ["torn_packaging", "crushed_packaging"]:
+                issue = "dent"
+        elif claim_object == "package":
+            if issue == "dent":
+                issue = "crushed_packaging"
+            elif issue in ["scratch", "crack", "glass_shatter"]:
+                issue = "torn_packaging"
+                
+        return part, issue
+
     def _rule_based_parser(self, text, claim_object):
         text = text.lower()
         
@@ -190,57 +228,86 @@ class ClaimParser:
             detected_issue = "dent"
         if re.search(r"scratch|scrape|mark", text):
             detected_issue = "scratch"
-        if re.search(r"crack|shatter|broke", text):
+        if re.search(r"crack|shatter", text):
             detected_issue = "crack"
+        if re.search(r"broken|broke|damage", text):
+            detected_issue = "broken_part"
         if re.search(r"missing|lost|not inside|not there", text):
             detected_issue = "missing_part"
-        if re.search(r"torn|opened|seal", text):
+        if re.search(r"torn|opened", text):
             detected_issue = "torn_packaging"
-        if re.search(r"wet|water|spill|stain|oily", text):
+        if re.search(r"wet|water|spill|stain|oily|oil", text):
             detected_issue = "water_damage"
+            
+        # Object-specific issue overrides
+        if claim_object == "laptop" and "opened" in text and not re.search(r"torn|rip|cut", text):
+            # "laptop opened" is normal mechanical function, not torn packaging
+            detected_issue = "broken_part" if "broken" in text else "unknown"
             
         # 2. Determine part using regex keywords
         detected_part = "unknown"
-        allowed_parts = self._get_allowed_parts(claim_object)
         
-        for part in allowed_parts:
-            # Check for direct or fuzzy word match
-            part_clean = part.replace("_", " ")
-            if part_clean in text:
-                detected_part = part
-                break
-                
-        # Resolve specific heuristics if still unknown
-        if detected_part == "unknown":
-            if claim_object == "car":
-                if "windshield" in text or "glass" in text:
-                    detected_part = "windshield"
-                elif "mirror" in text:
-                    detected_part = "side_mirror"
-                elif "bumper" in text:
-                    detected_part = "rear_bumper" if "back" in text else "front_bumper"
-            elif claim_object == "laptop":
-                if "screen" in text or "display" in text:
-                    detected_part = "screen"
-                elif "keyboard" in text or "key" in text:
-                    detected_part = "keyboard"
-                elif "trackpad" in text or "touch" in text:
-                    detected_part = "trackpad"
-            elif claim_object == "package":
-                if "corner" in text:
-                    detected_part = "package_corner"
-                elif "seal" in text or "tape" in text:
-                    detected_part = "seal"
-                elif "label" in text or "sticker" in text:
-                    detected_part = "label"
-                elif "contents" in text or "inside" in text or "item" in text:
-                    detected_part = "contents"
-                else:
-                    detected_part = "box"
+        # Specific search order based on object type
+        if claim_object == "car":
+            if "windshield" in text or "glass" in text:
+                detected_part = "windshield"
+            elif "side mirror" in text or "mirror" in text:
+                detected_part = "side_mirror"
+            elif "headlight" in text or "front light" in text:
+                detected_part = "headlight"
+            elif "taillight" in text or "back light" in text or "rear light" in text:
+                detected_part = "taillight"
+            elif "bumper" in text:
+                detected_part = "rear_bumper" if "back" in text or "rear" in text else "front_bumper"
+            elif "door" in text:
+                detected_part = "door"
+            elif "hood" in text:
+                detected_part = "hood"
+            elif "fender" in text:
+                detected_part = "fender"
+            elif "quarter panel" in text:
+                detected_part = "quarter_panel"
+            else:
+                detected_part = "body"
+        elif claim_object == "laptop":
+            if "screen" in text or "display" in text or "glass" in text:
+                detected_part = "screen"
+            elif "keyboard" in text or "key" in text or "keys" in text or "button" in text:
+                detected_part = "keyboard"
+            elif "trackpad" in text or "touchpad" in text or "mouse" in text:
+                detected_part = "trackpad"
+            elif "hinge" in text:
+                detected_part = "hinge"
+            elif "lid" in text or "cover" in text:
+                detected_part = "lid"
+            elif "corner" in text:
+                detected_part = "corner"
+            elif "port" in text or "plug" in text:
+                detected_part = "port"
+            elif "base" in text or "bottom" in text:
+                detected_part = "base"
+            else:
+                detected_part = "body"
+        elif claim_object == "package":
+            if "corner" in text:
+                detected_part = "package_corner"
+            elif "seal" in text or "tape" in text or "flap" in text or "open" in text:
+                detected_part = "seal"
+            elif "label" in text or "sticker" in text or "address" in text:
+                detected_part = "label"
+            elif "inside" in text or "item" in text or "product" in text or "contents" in text or "content" in text:
+                detected_part = "contents"
+            elif "side" in text:
+                detected_part = "package_side"
+            else:
+                detected_part = "box"
 
         # Refined normalization mapping
         detected_part = self._map_part_synonyms(detected_part, claim_object)
         detected_issue = self._map_issue_synonyms(detected_issue)
+        
+        # Apply object aware constraints
+        detected_part, detected_issue = self._apply_object_aware_constraints(detected_part, detected_issue, claim_object)
 
         return {
             "claimed_issue_type": detected_issue,
