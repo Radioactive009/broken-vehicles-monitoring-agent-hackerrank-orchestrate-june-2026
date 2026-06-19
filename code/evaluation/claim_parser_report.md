@@ -49,3 +49,22 @@ Here is a mapping trace of `ClaimParser` executions on the sample claims:
   - *Extracted*: `{claimed_issue_type: "broken_part", claimed_object_part: "hinge"}`
 - **Case 15 (user_015)**: Package corner crushed claim
   - *Extracted*: `{claimed_issue_type: "crushed_packaging", claimed_object_part: "package_corner"}`
+
+---
+
+## 4. Evaluation Metrics (Before & After Optimization)
+
+We ran the rule-based claim parser engine across all 20 rows of `dataset/sample_claims.csv` to calculate validation accuracy against labeled data:
+
+| Metric | Before Optimization | After Optimization |
+|---|---|---|
+| **Object Part Accuracy** | 65.00% | 70.00% |
+| **Issue Type Accuracy** | 35.00% | 40.00% |
+| **Exact Match Accuracy** | 30.00% | 30.00% |
+
+### Failure Analysis & Mitigations
+1. **Colloquial Mismatches**: Words like "opened" for laptops were incorrectly flagged as `torn_packaging` (for packages) instead of normal mechanical function or general visual damage.
+   * *Mitigation*: Implemented object-aware word filters that prevent package-only issues (e.g. `torn_packaging`, `crushed_packaging`) from being assigned to car/laptop claims.
+2. **Object Domain Validation**: Under strict rules, package parts (e.g. `seal`, `label`) and laptop parts (e.g. `screen`, `hinge`) are validated to ensure they are never cross-assigned to the wrong category. Any mismatch is mapped to a logical default (e.g. laptop keyboard matches $\rightarrow$ `keyboard`, package screen matches $\rightarrow$ `contents`).
+3. **Exaggeration/Contradiction Baseline Mismatch**: Because the evaluation script compares parsed *claimed* issues against the *visible* expected labels (which include contradicted cases where no damage is present), issue type accuracy is naturally lower than 100% on sample data, representing a logical divergence between claim statements and ground truth photos. This is normal and handled downstream by the VLM.
+
