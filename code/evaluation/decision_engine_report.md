@@ -20,9 +20,9 @@ The `DecisionEngine` evaluates claims using the following precedence order:
 
 ### Case 0 (CAR)
 - **Expected (Ground Truth):** `supported`
-- **Predicted:** `not_enough_information`
+- **Predicted:** `contradicted`
 - **Ground Truth Justification:** *"The image clearly shows a dent on the rear bumper and the user history does not add risk."*
-- **Predicted Justification:** *"The image quality is insufficient (too blurry, cropped, or non-original) to verify the claim."*
+- **Predicted Justification:** *"Claim contradicts image evidence. The claimed rear_bumper is visible but appears to have no damage."*
 - **Correctness Match:** ❌ FAIL
 
 ### Case 1 (CAR)
@@ -48,9 +48,9 @@ The `DecisionEngine` evaluates claims using the following precedence order:
 
 ### Case 4 (CAR)
 - **Expected (Ground Truth):** `contradicted`
-- **Predicted:** `not_enough_information`
+- **Predicted:** `supported`
 - **Ground Truth Justification:** *"The images show only minor rear bumper scratching, so the severe damage claim is contradicted. User history also shows several rejected claims."*
-- **Predicted Justification:** *"The visible damage is on a different part than the claimed rear_bumper."*
+- **Predicted Justification:** *"Claim supported by image evidence. A visible broken_part is present on the rear_bumper."*
 - **Correctness Match:** ❌ FAIL
 
 ### Case 5 (CAR)

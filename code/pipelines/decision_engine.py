@@ -8,6 +8,58 @@ class DecisionEngine:
     def __init__(self):
         logger.info("Initializing Decision Engine...")
 
+    def issue_similarity(self, issue_a, issue_b):
+        """
+        Compares two issue types to check if they are identical, compatible synonyms, or mismatches.
+        """
+        a = str(issue_a).lower().replace(" ", "_").strip()
+        b = str(issue_b).lower().replace(" ", "_").strip()
+        
+        if a == b:
+            return "exact_match"
+            
+        compatible_sets = [
+            {"crack", "glass_shatter"},
+            {"dent", "collision"},
+            {"broken_part", "missing_part"},
+            {"torn_packaging", "crushed_packaging"},
+            {"water_damage", "stain"}
+        ]
+        
+        for cset in compatible_sets:
+            if a in cset and b in cset:
+                return "compatible"
+                
+        return "mismatch"
+
+    def part_similarity(self, part_a, part_b):
+        """
+        Checks if two object parts are compatible.
+        """
+        a = str(part_a).lower().replace("_", " ").strip()
+        b = str(part_b).lower().replace("_", " ").strip()
+        
+        if a == b:
+            return True
+            
+        # Check display and screen compatibility
+        if ("screen" in a or "display" in a or "lcd" in a) and ("screen" in b or "display" in b or "lcd" in b):
+            return True
+            
+        # Check bumper compatibility
+        if "bumper" in a and "bumper" in b:
+            return True
+            
+        # Check substring containment
+        if a in b or b in a:
+            return True
+            
+        # Side mirror compatibility
+        if "mirror" in a and "mirror" in b:
+            return True
+            
+        return False
+
     def make_decision(self, claim_object, parsed_claim, analyzer_output, validator_output, risk_engine_output):
         """
         Synthesizes final status, image-grounded justification, supporting image IDs,
@@ -40,6 +92,10 @@ class DecisionEngine:
         claim_status = "not_enough_information"
         justification = ""
         
+        # Check similarity
+        issue_match = self.issue_similarity(claimed_issue, visible_issue)
+        parts_match = self.part_similarity(claimed_part, visible_part)
+        
         # Rule 1: If evidence standard is not met
         if not evidence_standard_met:
             claim_status = "not_enough_information"
@@ -52,25 +108,28 @@ class DecisionEngine:
             
         # Rule 2: If evidence is sufficient
         else:
-            # check contradiction flags
-            if "wrong_object" in risk_flags:
+            # check object mismatch
+            if "wrong_object" in risk_flags or (detected_object != "other" and detected_object != claim_object):
                 claim_status = "contradicted"
                 justification = f"Claim contradicts image evidence. The detected object is a {detected_object}, which does not match the claimed {claim_object}."
                 
-            elif "wrong_object_part" in risk_flags:
+            # check part mismatch (if parts are not compatible)
+            elif not parts_match and "wrong_object_part" in risk_flags:
                 claim_status = "contradicted"
                 justification = f"Claim contradicts image evidence. Visible damage is on the {visible_part}, which does not match the claimed {claimed_part}."
                 
+            # check undamaged contradiction
             elif visible_issue == "none" or not damage_visible or "damage_not_visible" in risk_flags:
                 claim_status = "contradicted"
                 justification = f"Claim contradicts image evidence. The claimed {claimed_part} is visible but appears to have no damage."
                 
-            elif visible_issue != "unknown" and claimed_issue != "unknown" and visible_issue != claimed_issue:
+            # check issue contradiction (if issues mismatch completely)
+            elif visible_issue != "unknown" and claimed_issue != "unknown" and issue_match == "mismatch":
                 claim_status = "contradicted"
                 justification = f"Claim contradicts image evidence. The VLM detected {visible_issue} on the {visible_part}, which contradicts the claimed {claimed_issue}."
                 
-            # check support condition
-            elif detected_object == claim_object and visible_part == claimed_part and damage_visible:
+            # check support condition (exact match or compatible issues, and compatible parts)
+            elif detected_object == claim_object and parts_match and damage_visible and issue_match in ["exact_match", "compatible"]:
                 claim_status = "supported"
                 justification = f"Claim supported by image evidence. A visible {visible_issue} is present on the {claimed_part}."
                 
