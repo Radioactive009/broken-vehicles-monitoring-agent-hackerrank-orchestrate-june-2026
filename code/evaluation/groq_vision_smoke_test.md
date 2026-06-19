@@ -1,6 +1,6 @@
 # Groq Vision Smoke Test Results
 
-**Model Used:** `llama-3.2-11b-vision-preview`
+**Model Used:** `meta-llama/llama-4-scout-17b-16e-instruct`
 
 ## Individual Case Evaluations
 
@@ -13,7 +13,18 @@
 - **Issue Type:** `dent`
 - **Object Part:** `rear_bumper`
 
-**Error occurred during request:** Error code: 400 - {'error': {'message': 'The model `llama-3.2-11b-vision-preview` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+#### Model Prediction
+- **Detected Object:** `car`
+- **Visible Damage:** `True`
+- **Issue Type:** `collision`
+- **Object Part:** `rear bumper and trunk`
+- **Severity:** `moderate to severe`
+- **Confidence:** `high`
+
+#### Comparison Summary
+- Object Match: ✅ PASS
+- Damage Match: ✅ PASS
+- Part Match: ❌ FAIL
 
 ### Case 8 - LAPTOP
 - **Image Path:** `images/sample/case_009/img_1.jpg`
@@ -24,7 +35,18 @@
 - **Issue Type:** `crack`
 - **Object Part:** `screen`
 
-**Error occurred during request:** Error code: 400 - {'error': {'message': 'The model `llama-3.2-11b-vision-preview` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+#### Model Prediction
+- **Detected Object:** `Laptop`
+- **Visible Damage:** `True`
+- **Issue Type:** `Crack`
+- **Object Part:** `Screen`
+- **Severity:** `Major`
+- **Confidence:** `High`
+
+#### Comparison Summary
+- Object Match: ✅ PASS
+- Damage Match: ✅ PASS
+- Part Match: ✅ PASS
 
 ### Case 14 - PACKAGE
 - **Image Path:** `images/sample/case_015/img_1.jpg`
@@ -35,7 +57,18 @@
 - **Issue Type:** `crushed_packaging`
 - **Object Part:** `package_corner`
 
-**Error occurred during request:** Error code: 400 - {'error': {'message': 'The model `llama-3.2-11b-vision-preview` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+#### Model Prediction
+- **Detected Object:** `cardboard box`
+- **Visible Damage:** `True`
+- **Issue Type:** `physical damage`
+- **Object Part:** `corner`
+- **Severity:** `minor`
+- **Confidence:** `high`
+
+#### Comparison Summary
+- Object Match: ❌ FAIL
+- Damage Match: ✅ PASS
+- Part Match: ❌ FAIL
 
 ## Analysis & Production Suitability
 

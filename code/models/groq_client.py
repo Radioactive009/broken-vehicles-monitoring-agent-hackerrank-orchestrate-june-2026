@@ -26,7 +26,7 @@ class GroqVisionClient(BaseAPIClient):
         else:
             logger.warning("GROQ_API_KEY not found in environment. GroqVisionClient initialized without a client.")
             
-        self.model_name = os.environ.get("GROQ_MODEL_NAME", "llama-3.2-11b-vision-preview")
+        self.model_name = os.environ.get("GROQ_MODEL_NAME", "meta-llama/llama-4-scout-17b-16e-instruct")
         logger.info(f"Groq Vision client set up to use model: {self.model_name} at URL: {self.base_url}")
 
     def call_vlm(self, prompt, base64_images=None, max_tokens=1024, json_mode=False):
