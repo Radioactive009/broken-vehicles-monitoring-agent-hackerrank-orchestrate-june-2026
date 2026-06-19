@@ -131,9 +131,10 @@ class ClaimParser:
         if "side" in part:
             if claim_object == "package":
                 return "package_side"
-        if "seal" in part or "tape" in part:
-            return "seal"
+        return part
 
+    def _rule_based_parser(self, text, claim_object):
+        text = text.lower()
         
         # 1. Determine issue type using regex keywords
         detected_issue = "unknown"
