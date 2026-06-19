@@ -15,8 +15,8 @@ def run_test():
         base_url="https://api.groq.com/openai/v1"
     )
     
-    # We will use llama3-8b-8192 for text connectivity test
-    model_name = "llama3-8b-8192"
+    # We will use llama-3.1-8b-instant for text connectivity test
+    model_name = "llama-3.1-8b-instant"
     prompt = 'Return ONLY: {"status":"connected"}'
     
     print(f"Connecting to Groq using model: {model_name}...")
