@@ -1,7 +1,7 @@
 # Taxonomy Compatibility Evaluation Report
 
 - **Old Accuracy (before compatibility layer):** `30.0%`
-- **New Accuracy (after compatibility layer):** `50.0%`
+- **New Accuracy (after compatibility layer):** `40.0%`
 
 ## Mapping Rules & Compatibility Layers
 We added a taxonomy compatibility layer in the Decision Engine to prevent close synonyms and related issues from being evaluated as false contradictions.
@@ -29,9 +29,9 @@ We added a taxonomy compatibility layer in the Decision Engine to prevent close 
 
 ### Case 1 (CAR)
 - **Expected Status:** `not_enough_information`
-- **Predicted Status:** `supported`
+- **Predicted Status:** `contradicted`
 - **Correctness:** ❌ FAIL
-- **Visible Issue / Part:** `broken_part` / `front_bumper`
+- **Visible Issue / Part:** `unknown` / `unknown`
 - **Claimed Issue / Part:** `broken_part` / `front_bumper`
 
 ### Case 2 (CAR)
@@ -64,9 +64,9 @@ We added a taxonomy compatibility layer in the Decision Engine to prevent close 
 
 ### Case 6 (CAR)
 - **Expected Status:** `supported`
-- **Predicted Status:** `supported`
-- **Correctness:** ✅ PASS
-- **Visible Issue / Part:** `dent` / `door`
+- **Predicted Status:** `contradicted`
+- **Correctness:** ❌ FAIL
+- **Visible Issue / Part:** `unknown` / `unknown`
 - **Claimed Issue / Part:** `dent` / `door`
 
 ### Case 7 (CAR)
