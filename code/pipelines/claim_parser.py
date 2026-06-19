@@ -136,9 +136,7 @@ class ClaimParser:
         if "label" in part or "sticker" in part:
             return "label"
 
-        return part
 
-    def _rule_based_parser(self, text, claim_object):
         text = text.lower()
         
         # 1. Determine issue type using regex keywords
