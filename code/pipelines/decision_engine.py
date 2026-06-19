@@ -119,7 +119,7 @@ class DecisionEngine:
                 justification = f"Claim contradicts image evidence. Visible damage is on the {visible_part}, which does not match the claimed {claimed_part}."
                 
             # check undamaged contradiction
-            elif visible_issue == "none" or not damage_visible or "damage_not_visible" in risk_flags:
+            elif (visible_issue == "none" or "damage_not_visible" in risk_flags) and visible_issue != "unknown":
                 claim_status = "contradicted"
                 justification = f"Claim contradicts image evidence. The claimed {claimed_part} is visible but appears to have no damage."
                 

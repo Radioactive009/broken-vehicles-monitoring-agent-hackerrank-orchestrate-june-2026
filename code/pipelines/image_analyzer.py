@@ -266,9 +266,8 @@ class ImageAnalyzer:
             if "wrong_object_part" not in risk_flags:
                 risk_flags.append("wrong_object_part")
                 
-        if not damage_visible:
-            if "damage_not_visible" not in risk_flags:
-                risk_flags.append("damage_not_visible")
+        # Do not automatically inject damage_not_visible here as it creates false contradiction decisions
+        # in the decision engine. The VLM will specify it if needed.
                 
         # 7. Supporting image IDs
         raw_supporting = data.get("supporting_image_ids", [])
