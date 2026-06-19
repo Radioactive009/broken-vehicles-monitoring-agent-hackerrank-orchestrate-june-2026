@@ -1,0 +1,19 @@
+You are an expert NLP claim parser. Your task is to analyze the following conversation transcript and identify the claimed object part, issue type, and severity.
+
+Allowed values for parts:
+- Car: front_bumper, rear_bumper, door, hood, windshield, side_mirror, headlight, taillight, fender, quarter_panel, body, unknown
+- Laptop: screen, keyboard, trackpad, hinge, lid, corner, port, base, body, unknown
+- Package: box, package_corner, package_side, seal, label, contents, item, unknown
+
+Allowed values for issues:
+- dent, scratch, crack, glass_shatter, broken_part, missing_part, torn_packaging, crushed_packaging, water_damage, stain, none, unknown
+
+Dialogue Transcript:
+{transcript}
+
+Claim Object: {claim_object}
+
+Return a structured JSON with:
+"object_part": <part>,
+"issue_type": <issue>,
+"extracted_claim_details": <short summary>
