@@ -1,0 +1,9 @@
+{
+  "90cba924dc32bd3d89d7f230776d9636c0084279b7b785546558c6cc2f26212c": {
+    "claimed_issue_type": "dent",
+    "claimed_object_part": "rear_bumper",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.9
+  }
+}
