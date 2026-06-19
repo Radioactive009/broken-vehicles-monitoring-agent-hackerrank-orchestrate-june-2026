@@ -68,6 +68,7 @@ class GroqVisionClient(BaseAPIClient):
                 model=self.model_name,
                 messages=messages,
                 max_tokens=max_tokens,
+                temperature=0.0,
                 **extra_params
             )
             logger.info("Successfully received VLM response from Groq.")
