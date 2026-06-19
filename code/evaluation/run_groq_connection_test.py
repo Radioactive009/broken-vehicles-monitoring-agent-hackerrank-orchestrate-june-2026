@@ -17,7 +17,7 @@ def run_test():
     
     # We will use llama-3.1-8b-instant for text connectivity test
     model_name = "llama-3.1-8b-instant"
-    prompt = 'Return ONLY: {"status":"connected"}'
+    prompt = 'Return ONLY the following json: {"status":"connected"}'
     
     print(f"Connecting to Groq using model: {model_name}...")
     try:
