@@ -133,11 +133,7 @@ class ClaimParser:
                 return "package_side"
         if "seal" in part or "tape" in part:
             return "seal"
-        if "label" in part or "sticker" in part:
-            return "label"
 
-
-        text = text.lower()
         
         # 1. Determine issue type using regex keywords
         detected_issue = "unknown"
