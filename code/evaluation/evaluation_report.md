@@ -86,7 +86,7 @@
 
 ### Row 10 (User: user_010, Object: LAPTOP)
 - **Claim Status:** Expected: `supported` | Predicted: `contradicted`
-- **Justification:** *"Claim contradicts image evidence. The claimed screen is visible but appears to have no damage."*
+- **Justification:** *"Claim contradicts image evidence. The claimed hinge is visible but appears to have no damage."*
 - **Evidence sufficiency:** Expected: `True` | Predicted: `True`
 - **Image Usability:** Expected: `True` | Predicted: `True`
 - **Part Match:** Expected: `hinge` | Predicted: `unknown`
@@ -94,7 +94,7 @@
 
 ### Row 11 (User: user_011, Object: LAPTOP)
 - **Claim Status:** Expected: `supported` | Predicted: `contradicted`
-- **Justification:** *"Claim contradicts image evidence. The claimed screen is visible but appears to have no damage."*
+- **Justification:** *"Claim contradicts image evidence. The claimed keyboard is visible but appears to have no damage."*
 - **Evidence sufficiency:** Expected: `True` | Predicted: `True`
 - **Image Usability:** Expected: `True` | Predicted: `True`
 - **Part Match:** Expected: `keyboard` | Predicted: `unknown`
@@ -142,7 +142,7 @@
 
 ### Row 17 (User: user_031, Object: PACKAGE)
 - **Claim Status:** Expected: `supported` | Predicted: `contradicted`
-- **Justification:** *"Claim contradicts image evidence. The claimed seal is visible but appears to have no damage."*
+- **Justification:** *"Claim contradicts image evidence. The claimed package_corner is visible but appears to have no damage."*
 - **Evidence sufficiency:** Expected: `True` | Predicted: `True`
 - **Image Usability:** Expected: `True` | Predicted: `True`
 - **Part Match:** Expected: `package_side` | Predicted: `unknown`
@@ -150,7 +150,7 @@
 
 ### Row 18 (User: user_032, Object: PACKAGE)
 - **Claim Status:** Expected: `not_enough_information` | Predicted: `contradicted`
-- **Justification:** *"Claim contradicts image evidence. The claimed seal is visible but appears to have no damage."*
+- **Justification:** *"Claim contradicts image evidence. The claimed contents is visible but appears to have no damage."*
 - **Evidence sufficiency:** Expected: `False` | Predicted: `True`
 - **Image Usability:** Expected: `False` | Predicted: `True`
 - **Part Match:** Expected: `contents` | Predicted: `unknown`
@@ -158,7 +158,7 @@
 
 ### Row 19 (User: user_033, Object: PACKAGE)
 - **Claim Status:** Expected: `contradicted` | Predicted: `contradicted`
-- **Justification:** *"Claim contradicts image evidence. The claimed contents is visible but appears to have no damage."*
+- **Justification:** *"Claim contradicts image evidence. The claimed box is visible but appears to have no damage."*
 - **Evidence sufficiency:** Expected: `True` | Predicted: `True`
 - **Image Usability:** Expected: `True` | Predicted: `True`
 - **Part Match:** Expected: `unknown` | Predicted: `unknown`
