@@ -5,5 +5,313 @@
     "claimed_object": "car",
     "severity_hint": "medium",
     "confidence": 0.9
+  },
+  "e6d3515e13d10d9c01a05eb7c5ac52fa319ca799e0f839590d71d01b1ce964a7": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "headlight",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "5e48b4b6a51bd060d096b9c0f749929a4c418582e131a8dd94428bea313fd195": {
+    "claimed_issue_type": "missing_part",
+    "claimed_object_part": "door",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "37e12c1c7b72c380e0ce3ec3ca7606baea37386b0599d178a96b79a7e3813c25": {
+    "claimed_issue_type": "crack",
+    "claimed_object_part": "windshield",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "3a471bca3d0b1036586db4ef77d8c3187ec7938bb81af8b25335be4723a6d542": {
+    "claimed_issue_type": "missing_part",
+    "claimed_object_part": "side_mirror",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "3a513371e78969602182ada2d8a1fd9d224d3b226810bfa26e9e8455a4fbe3e9": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "windshield",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "38e8513c2efa699a2180cee89c6d51e0c67a0c241de85cc9a74fb8226cc2b85c": {
+    "claimed_issue_type": "dent",
+    "claimed_object_part": "rear_bumper",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "490e84b51523fc4be6c892a423556f4044c42571bbe907cb3a02a67207df1c00": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "headlight",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "d1ae4e36f93070922b8d012e3aab63e9fdf50631e66b8c2e4392978194da9792": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "rear_bumper",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "a7016f02be101e6e81ce73f5b52106cf48d17bf7502cab6973e1025a8c2b9c71": {
+    "claimed_issue_type": "crack",
+    "claimed_object_part": "headlight",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "55bdd5ccc0993108813159ef7008ee9cecdb07538b2b21bfee9f9a906036fc01": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "windshield",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "0acc57905f2a078d0f3d38a4395e675b77ce93dbf91d68b8298169fdc9c9690c": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "screen",
+    "claimed_object": "laptop",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "9b7f5bb6e37c783a89826e9679b2d4eca15fc770c1ed8873b4f129717bedb547": {
+    "claimed_issue_type": "water_damage",
+    "claimed_object_part": "keyboard",
+    "claimed_object": "laptop",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "499c0e8eb4a1b3a28e939bdeed7acb52e2e66f434e04c3e383f8425159f80b3e": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "screen",
+    "claimed_object": "laptop",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "0027f562e34fc2f36c05c51ab345161edc375240e0a1b0025210fb4a759d5242": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "screen",
+    "claimed_object": "laptop",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "ba1fa8be1725302c1e1fcc15fbcc956addea72450d27d4190811692da0e23396": {
+    "claimed_issue_type": "missing_part",
+    "claimed_object_part": "keyboard",
+    "claimed_object": "laptop",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "5c9c5ea7e0ecb83116edbc09bc64ae85af949a6f05e5c9105ff6e555908a9ad9": {
+    "claimed_issue_type": "crack",
+    "claimed_object_part": "screen",
+    "claimed_object": "laptop",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "91625de9badf86cfd63fbb15d5770e6fbc2bea235c7a43b0f2b987fe19cf95ec": {
+    "claimed_issue_type": "water_damage",
+    "claimed_object_part": "screen",
+    "claimed_object": "laptop",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "2e4848986f2b7393868fafb45d30009fd92219b51f091dba6a6c5edbc8902afa": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "screen",
+    "claimed_object": "laptop",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "e316f96c8822dab401dcfa241113f5274be3820786b18a1c531833d2a2a99538": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "package_corner",
+    "claimed_object": "package",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "7b10c5c7c862d4af21b14de7497c255a5831a4a53b01a2dbfffc26bc90b4697b": {
+    "claimed_issue_type": "torn_packaging",
+    "claimed_object_part": "seal",
+    "claimed_object": "package",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "db5ec0e053b9319a91357cefb7728ab1c2587aafbbe63f2766200b545b20e90e": {
+    "claimed_issue_type": "water_damage",
+    "claimed_object_part": "label",
+    "claimed_object": "package",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "88167db791658590e6e165babeb98616680d6b117370b42a17e5366590978659": {
+    "claimed_issue_type": "torn_packaging",
+    "claimed_object_part": "seal",
+    "claimed_object": "package",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "4ed96ab1acf537a9da4db1f4a1a892b0155fc0630796be23832a8d4989325088": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "package_corner",
+    "claimed_object": "package",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "2774d49d7ec9a809616b24046524baf4b68bdb056af31b29b80108fcbcaece06": {
+    "claimed_issue_type": "water_damage",
+    "claimed_object_part": "box",
+    "claimed_object": "package",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "c50b20c4f6891ae5476aa04260d122a9367d93d0aebd841a93d4ec73bea70c94": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "contents",
+    "claimed_object": "package",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "87281abf81bfec345886196706a9000a38cb1aafa53c97b6a24410e2f85456a0": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "contents",
+    "claimed_object": "package",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "c69752d13ea8aac15d0cc310b71436c1809396021bcdda091993f37da243f180": {
+    "claimed_issue_type": "water_damage",
+    "claimed_object_part": "contents",
+    "claimed_object": "package",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "3bc30cfd0326dd5b1d17fe2086539d6845c94b3fa0e1de763305cc679a629fdd": {
+    "claimed_issue_type": "torn_packaging",
+    "claimed_object_part": "seal",
+    "claimed_object": "package",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "61000d5b2b29cb18b371ebd80233d6778f6940628b96a289472734b6fd4ebea9": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "front_bumper",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "4f44fd3b22cacd4f0fb5e724de6f9ed7d6840e5ef383d2624f96eb2f4e2b94b3": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "rear_bumper",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "aab25bfe343e3f62fdba349eb4f916efbf00c2106c6b7bbc2ba779c7f0eb486d": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "body",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "fb7f44f748833dd68e727088f6b8b5ee7bde85900ea0c79ea33c9b5e65d254a9": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "screen",
+    "claimed_object": "laptop",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "7687fabcc72c9a8f2363478f9004362732544a23624dc63bc2298ac84541e433": {
+    "claimed_issue_type": "crack",
+    "claimed_object_part": "screen",
+    "claimed_object": "laptop",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "413da8bd97a96317f70fc0ecfd58d53a7b5aee714561b2c6469818315ca7ae83": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "door",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "172a76738c53c16de99076a29c5c5766d2e90ec9739cdd2be536f21a281735e2": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "side_mirror",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "a0b2bbbbe37973fd03b3fb4cecd0a7ce1d42c275999d330544c601a914926394": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "box",
+    "claimed_object": "package",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "b432baa2e9e681c9afd34d0aff6b24df6f8cee0c826760b65455380a9184517e": {
+    "claimed_issue_type": "unknown",
+    "claimed_object_part": "body",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "451ae26ca59e74ffce2dc76e4c30a6d0d814ad8c46f6e949840a9006075ce6e6": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "screen",
+    "claimed_object": "laptop",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "1f79f3d34500b0163171bdd23de93c57a1eb0070d488ff7a8093a98cf9a8f096": {
+    "claimed_issue_type": "broken_part",
+    "claimed_object_part": "door",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "fc80bf280dbaeb70337a43fea015070c0c5eaca09134158e4681b6851cfbd248": {
+    "claimed_issue_type": "crushed_packaging",
+    "claimed_object_part": "package_corner",
+    "claimed_object": "package",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "423d79f42dc0b43570eb08255527d20545cea4f5d407bc88c6044b67440394ad": {
+    "claimed_issue_type": "missing_part",
+    "claimed_object_part": "keyboard",
+    "claimed_object": "laptop",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "1fa55a2f7c759d9a68ee616efc36d84c60c282e7486b3e37e0cde026240476ed": {
+    "claimed_issue_type": "scratch",
+    "claimed_object_part": "front_bumper",
+    "claimed_object": "car",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "614715731cbff1ce680e4a4cb2b404af2fc5ff3a4300848b9ec159e32530da42": {
+    "claimed_issue_type": "torn_packaging",
+    "claimed_object_part": "seal",
+    "claimed_object": "package",
+    "severity_hint": "medium",
+    "confidence": 0.7
+  },
+  "1d02337f878889b62aac9dc1f787b54a8109cbe1581d3d6373abe67cff2311f6": {
+    "claimed_issue_type": "dent",
+    "claimed_object_part": "screen",
+    "claimed_object": "laptop",
+    "severity_hint": "medium",
+    "confidence": 0.7
   }
 }

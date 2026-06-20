@@ -1,0 +1,14 @@
+{
+  "6de21ea2dcdeb5df67a88fa89dc8bc99668189dfa58eb8f5846c33debcbacf73": {
+    "detected_object": "car",
+    "visible_issue_type": "dent",
+    "visible_object_part": "rear_bumper",
+    "damage_visible": true,
+    "severity": "medium",
+    "image_quality": "clear",
+    "risk_flags": [],
+    "supporting_image_ids": [
+      "img_1"
+    ]
+  }
+}
